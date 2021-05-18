@@ -3,6 +3,7 @@ package com.supersuman.whysave
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.view.MotionEvent
@@ -19,8 +20,8 @@ import kotlin.math.atan2
 
 class MainActivity : AppCompatActivity() {
     private lateinit var knob : ImageView
-    private lateinit var phonenumberEditText : TextInputEditText
-    private lateinit var button : ImageButton
+    private lateinit var phonenumberEditText: TextInputEditText
+    private lateinit var button: ImageButton
     private lateinit var  textview1 : TextView
     private lateinit var  textview2 : TextView
     private lateinit var  textview3 : TextView
@@ -33,18 +34,34 @@ class MainActivity : AppCompatActivity() {
     private var mCurrAngle = 0.0
     private var mPrevAngle = 0.0
     private var countryCodes : MutableList<List<String>> = mutableListOf(listOf())
-    private var countryViewIds : MutableList<TextView> = mutableListOf(textview1,textview2,textview3,textview4,textview5,textview6,textview7,textview8)
+    private var textViewIds : MutableList<TextView> = mutableListOf()
 
-    @SuppressLint("ClickableViewAccessibility")
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initViews()
         addCountryCodes()
-        
-        setCountryCodes()
+        addTextViewIds()
+        setCountryNamesCodesToViews()
+        setKnobTouchListener()
 
+        button.setOnClickListener {
+            closeKeyboard()
+            val countryCodeTemp = countryCode
+            if (phonenumberEditText.text?.contains("+") == true){
+                countryCode=""
+            }
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send/?phone=%2B" + countryCode + phonenumberEditText.text.toString() + "&text&app_absent=0"))
+            startActivity(browserIntent)
+            countryCode = countryCodeTemp
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setKnobTouchListener() {
         knob.setOnTouchListener { _, event ->
             val xc: Int = knob.width / 2
             val yc: Int = knob.height / 2
@@ -62,10 +79,7 @@ class MainActivity : AppCompatActivity() {
                     mCurrAngle =
                         Math.toDegrees(atan2((x - xc).toDouble(), (yc - y).toDouble()))
                     animate(mPrevAngle, mCurrAngle)
-
-
-
-                    println(mCurrAngle)
+                    higlightCoutryText(mCurrAngle)
                 }
                 MotionEvent.ACTION_UP -> {
                     mCurrAngle = 0.0
@@ -74,34 +88,57 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnTouchListener true
         }
+    }
 
-        button.setOnClickListener {
-            closeKeyboard()
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send/?phone=%2B" + countryCode + phonenumberEditText.text.toString() + "&text&app_absent=0"))
-            startActivity(browserIntent)
+    private fun higlightCoutryText(mCurrAngle: Double) {
+        if (mCurrAngle>-22.5 && mCurrAngle<22.5){
+            increaseTextSize(0)
+            countryCode = countryCodes[0][1]
+        } else if (mCurrAngle>22.5 && mCurrAngle<=67.5){
+            increaseTextSize(1)
+            countryCode = countryCodes[1][1]
+        } else if (mCurrAngle>67.5 && mCurrAngle<=112.5){
+            increaseTextSize(2)
+            countryCode = countryCodes[2][1]
+        } else if (mCurrAngle>112.5 && mCurrAngle<=157.5){
+            increaseTextSize(3)
+            countryCode = countryCodes[3][1]
+        } else if (mCurrAngle>157.5 || mCurrAngle<-157.5){
+            increaseTextSize(4)
+            countryCode = countryCodes[4][1]
+        } else if (mCurrAngle>-157.5 && mCurrAngle<=-112.5){
+            increaseTextSize(5)
+            countryCode = countryCodes[5][1]
+        } else if (mCurrAngle>-112.5 && mCurrAngle<=-67.5){
+            increaseTextSize(6)
+            countryCode = countryCodes[6][1]
+        } else if (mCurrAngle>-67.5 && mCurrAngle<=-22.5){
+            increaseTextSize(7)
+            countryCode = countryCodes[7][1]
         }
     }
 
-    private fun highlightCountryTextSize(countryViewIds : MutableList<TextView>,position: Int){
-        for (i in countryViewIds.indices){
-            if (position==i){
-                countryViewIds[i].textSize = 28.0F
-            } else{
-                countryViewIds[i].textSize = 18.0F
+    private fun increaseTextSize(position : Int){
+        for(i in textViewIds.indices){
+            if(position == i){
+                textViewIds[i].textSize = 20.0F
+                textViewIds[i].typeface = Typeface.DEFAULT_BOLD
+            }else{
+                textViewIds[i].textSize = 14.0F
+                textViewIds[i].typeface = Typeface.DEFAULT
             }
         }
     }
 
+    private fun addTextViewIds() {
+        textViewIds = mutableListOf(textview1,textview2,textview3,textview4,textview5,textview6,textview7,textview8)
+    }
+
     @SuppressLint("SetTextI18n")
-    private fun setCountryCodes() {
-        textview1.text = countryCodes[0][0]+"\n"+countryCodes[0][1]
-        textview2.text = countryCodes[1][0]+"\n"+countryCodes[1][1]
-        textview3.text = countryCodes[2][0]+"\n"+countryCodes[2][1]
-        textview4.text = countryCodes[3][0]+"\n"+countryCodes[3][1]
-        textview5.text = countryCodes[4][0]+"\n"+countryCodes[4][1]
-        textview6.text = countryCodes[5][0]+"\n"+countryCodes[5][1]
-        textview7.text = countryCodes[6][0]+"\n"+countryCodes[6][1]
-        textview8.text = countryCodes[7][0]+"\n"+countryCodes[7][1]
+    private fun setCountryNamesCodesToViews() {
+        for (i in textViewIds.indices){
+            textViewIds[i].text = countryCodes[i][0]+"\n+"+countryCodes[i][1]
+        }
     }
 
     private fun initViews(){
@@ -109,6 +146,8 @@ class MainActivity : AppCompatActivity() {
         phonenumberEditText = findViewById(R.id.phonenumberEditText)
         button = findViewById(R.id.myButton)
         textview1 =findViewById(R.id.textView1)
+        textview1.textSize = 20.0F
+        textview1.typeface = Typeface.DEFAULT_BOLD
         textview2 =findViewById(R.id.textView2)
         textview3 =findViewById(R.id.textView3)
         textview4 =findViewById(R.id.textView4)
