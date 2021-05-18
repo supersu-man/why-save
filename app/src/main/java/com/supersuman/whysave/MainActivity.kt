@@ -13,8 +13,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import java.text.FieldPosition
-import kotlin.concurrent.thread
 import kotlin.math.atan2
 
 
@@ -30,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var  textview6 : TextView
     private lateinit var  textview7 : TextView
     private lateinit var  textview8 : TextView
-    var countryCode = "91"
+    private var countryCode = "91"
     private var mCurrAngle = 0.0
     private var mPrevAngle = 0.0
     private var countryCodes : MutableList<List<String>> = mutableListOf(listOf())
@@ -51,10 +49,14 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             closeKeyboard()
             val countryCodeTemp = countryCode
-            if (phonenumberEditText.text?.contains("+") == true){
+            val phoneNumber = phonenumberEditText.text.toString()
+            if ("+" in phoneNumber){
                 countryCode=""
             }
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send/?phone=%2B" + countryCode + phonenumberEditText.text.toString() + "&text&app_absent=0"))
+            if (" " in phoneNumber){
+                phoneNumber.replace(" ","")
+            }
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send/?phone=%2B$countryCode$phoneNumber&text&app_absent=0"))
             startActivity(browserIntent)
             countryCode = countryCodeTemp
         }
