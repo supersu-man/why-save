@@ -1,0 +1,54 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/eachCallLogCard"
+        android:clickable="true"
+        android:theme="@style/Theme.MaterialComponents.DayNight"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:focusable="true">
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/eachPhoneNumber"
+                android:paddingStart="5dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:text="Phone Number">
+
+            </TextView>
+            <TextView
+                android:id="@+id/eachCallType"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:text="Call Type"
+                android:textSize="16sp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/eachCallTime"
+                android:paddingEnd="5dp"
+                android:layout_margin="5dp"
+                android:layout_width="wrap_content"
+                android:text="Time"
+                android:textSize="16sp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
