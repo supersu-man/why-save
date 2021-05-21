@@ -7,9 +7,7 @@ Download latest apk file from [here](https://github.com/supersu-man/WhySave/rele
 
 # Features
 - Can let you start a conversation on Whatsapp without saving the contact.
+- Swiping right will give you access to your call history, tapping on any number will open conversation on app.
 
 # Problems
 - No problems yet because this is an extremely simple app.
-
-# Features to be added
-- For now this is the only thing I wanted Whatsapp could do.
