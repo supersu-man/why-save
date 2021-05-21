@@ -3,7 +3,7 @@ A very basic app which starts a conversation with any unsaved Whatsapp number.
 This might be extremely useful to a lot of people who keeps adding new numbers just to make a 5 min conversation or maybe to send some files. 
 
 # Downloads
-Download latest apk file from [here](https://github.com/supersu-man/WhySave/releases).
+- Download latest apk file from [here](https://github.com/supersu-man/WhySave/releases).
 
 # Features
 - Can let you start a conversation on Whatsapp without saving the contact.
