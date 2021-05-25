@@ -55,12 +55,12 @@ class CallLogsFragment : Fragment() {
     }
 
     private fun initViews() {
-        phonenumberEditText = activity!!.findViewById(R.id.phonenumberEditText)
-        swipeRefreshLayout = activity!!.findViewById(R.id.swipeRefreshLayout)
-        recyclerView = activity!!.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(activity!!.applicationContext,LinearLayoutManager.VERTICAL,false)
+        phonenumberEditText = requireActivity().findViewById(R.id.phonenumberEditText)
+        swipeRefreshLayout = requireActivity().findViewById(R.id.swipeRefreshLayout)
+        recyclerView = requireActivity().findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,false)
         recyclerView.adapter = CallLogsRecyclerViewAdapter(callsLogsArray,phonenumberEditText)
-        textView = activity!!.findViewById(R.id.warningTextView)
+        textView = requireActivity().findViewById(R.id.warningTextView)
     }
 
     private fun requestPermission() {
@@ -73,7 +73,7 @@ class CallLogsFragment : Fragment() {
 
     private fun openPermissionPage(){
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri = Uri.fromParts("package", activity!!.packageName, null)
+        val uri = Uri.fromParts("package", requireActivity().packageName, null)
         intent.data = uri
         startActivity(intent)
     }
@@ -84,7 +84,7 @@ class CallLogsFragment : Fragment() {
                 openPermissionPage()
             } else{
                 getSetCallsLog()
-                Toast.makeText(activity!!, "Log refreshed",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Log refreshed",Toast.LENGTH_SHORT).show()
             }
             swipeRefreshLayout.isRefreshing = false
         }
@@ -130,7 +130,7 @@ class CallLogsFragment : Fragment() {
             }
         }
         cursor?.close()
-        recyclerView.adapter!!.notifyDataSetChanged()
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun timeDuration(long: Long): String {
