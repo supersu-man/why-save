@@ -73,7 +73,7 @@ class PhoneNumberFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun setKnobTouchListener() {
         knob.setOnTouchListener { v, event ->
-            v.parent.requestDisallowInterceptTouchEvent(true);
+            v.parent.requestDisallowInterceptTouchEvent(true)
 
             val xc: Int = knob.width / 2
             val yc: Int = knob.height / 2
@@ -154,19 +154,19 @@ class PhoneNumberFragment : Fragment() {
     }
 
     private fun initViews(){
-        knob= activity!!.findViewById(R.id.knob)
-        phonenumberEditText = activity!!.findViewById(R.id.phonenumberEditText)
-        button = activity!!.findViewById(R.id.myButton)
-        textview1 =activity!!.findViewById(R.id.textView1)
+        knob= requireActivity().findViewById(R.id.knob)
+        phonenumberEditText = requireActivity().findViewById(R.id.phonenumberEditText)
+        button = requireActivity().findViewById(R.id.myButton)
+        textview1 =requireActivity().findViewById(R.id.textView1)
         textview1.textSize = 20.0F
         textview1.typeface = Typeface.DEFAULT_BOLD
-        textview2 =activity!!.findViewById(R.id.textView2)
-        textview3 =activity!!.findViewById(R.id.textView3)
-        textview4 =activity!!.findViewById(R.id.textView4)
-        textview5 =activity!!.findViewById(R.id.textView5)
-        textview6 =activity!!.findViewById(R.id.textView6)
-        textview7 =activity!!.findViewById(R.id.textView7)
-        textview8 =activity!!.findViewById(R.id.textView8)
+        textview2 =requireActivity().findViewById(R.id.textView2)
+        textview3 =requireActivity().findViewById(R.id.textView3)
+        textview4 =requireActivity().findViewById(R.id.textView4)
+        textview5 =requireActivity().findViewById(R.id.textView5)
+        textview6 =requireActivity().findViewById(R.id.textView6)
+        textview7 =requireActivity().findViewById(R.id.textView7)
+        textview8 =requireActivity().findViewById(R.id.textView8)
     }
 
     private  fun addCountryCodes(){
