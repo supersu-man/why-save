@@ -1,7 +1,9 @@
 package com.supersuman.whysave
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -18,6 +20,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
@@ -29,14 +33,43 @@ class CallLogsFragment : Fragment() {
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var textView: TextView
     private lateinit var phonenumberEditText: TextInputEditText
+    private lateinit var floatingActionButton: FloatingActionButton
+    private lateinit var sharedPref: SharedPreferences
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         initViews()
+        initListeners()
         setupRefresh()
+
         if (isPermissionPresent()){
             getSetCallsLog()
         }else{
             requestPermission()
+        }
+    }
+
+    private fun initListeners() {
+        floatingActionButton.setOnClickListener {
+            MaterialAlertDialogBuilder(this.requireContext())
+                .setTitle("Reverse list?")
+                .setMessage("This will reverse the call list")
+                .setPositiveButton("Yes"){ _, _ ->
+                    if (sharedPref.contains("ReverseLayout")){
+                        val linearManager =LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,false)
+                        linearManager.stackFromEnd = false
+                        recyclerView.layoutManager = linearManager
+                        sharedPref.edit().remove("ReverseLayout").apply()
+                    } else{
+                        val linearManager =LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,true)
+                        linearManager.stackFromEnd = true
+                        recyclerView.layoutManager = linearManager
+                        sharedPref.edit().putBoolean("ReverseLayout",true).apply()
+                    }
+                }
+                .setNegativeButton("No"){ _, _ ->
+                }
+                .show()
         }
     }
 
@@ -55,12 +88,23 @@ class CallLogsFragment : Fragment() {
     }
 
     private fun initViews() {
+        sharedPref = requireActivity().getSharedPreferences(
+            "WhySave", Context.MODE_PRIVATE)
         phonenumberEditText = requireActivity().findViewById(R.id.phonenumberEditText)
         swipeRefreshLayout = requireActivity().findViewById(R.id.swipeRefreshLayout)
         recyclerView = requireActivity().findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,false)
+        if (!sharedPref.contains("ReverseLayout")){
+            val linearManager =LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,false)
+            linearManager.stackFromEnd = false
+            recyclerView.layoutManager = linearManager
+        } else{
+            val linearManager =LinearLayoutManager(requireActivity().applicationContext,LinearLayoutManager.VERTICAL,true)
+            linearManager.stackFromEnd = true
+            recyclerView.layoutManager = linearManager
+        }
         recyclerView.adapter = CallLogsRecyclerViewAdapter(callsLogsArray,phonenumberEditText)
         textView = requireActivity().findViewById(R.id.warningTextView)
+        floatingActionButton = requireActivity().findViewById(R.id.floatingButton)
     }
 
     private fun requestPermission() {

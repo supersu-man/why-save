@@ -9,6 +9,13 @@ class PagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(frag
         return 2
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        when(position){
+            0 -> return "Type Number"
+            else -> return "Call Logs"
+        }
+    }
+
     override fun getItem(position: Int): Fragment {
         return when(position){
             0 -> PhoneNumberFragment()
