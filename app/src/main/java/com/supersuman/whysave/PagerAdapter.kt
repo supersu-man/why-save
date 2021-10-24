@@ -11,7 +11,7 @@ class PagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(frag
 
     override fun getPageTitle(position: Int): CharSequence {
         return when(position){
-            0 -> "Type Number"
+            0 -> "Keypad"
             else -> "Call Logs"
         }
     }
