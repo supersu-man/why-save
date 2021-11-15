@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        supportActionBar?.hide()
         initViews()
 
         thread {
-            val updater = Updater(this,"https://github.com/supersu-man/WhySave/releases/latest")
+            val updater = Updater(this, "https://github.com/supersu-man/WhySave/releases/latest")
             checkForUpdates(updater)
         }
     }
