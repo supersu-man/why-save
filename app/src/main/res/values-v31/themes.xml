@@ -1,5 +1,3 @@
 <resources>
-    <style name="Theme.WhySave" parent="Theme.Material3.DynamicColors.DayNight">
-
-    </style>
+    <style name="Theme.WhySave" parent="Theme.Material3.DynamicColors.DayNight" />
 </resources>
