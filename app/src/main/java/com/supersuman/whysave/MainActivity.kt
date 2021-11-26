@@ -56,5 +56,4 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(rootLayout,"Unable To Check For Updates",Snackbar.LENGTH_SHORT).show()
         }
     }
-
 }

@@ -162,7 +162,7 @@ class CallLogsFragment : Fragment() {
             val currentTime = Calendar.getInstance().timeInMillis
             while (cursor.moveToNext()) {
                 val name = cursor.getString(0)
-                if (name == null){
+                if (name == ""){
                     val number = cursor.getString(1)
                     val type = cursor.getString(2)
                     val time = cursor.getString(3)
