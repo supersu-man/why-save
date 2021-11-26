@@ -13,17 +13,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.RotateAnimation
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.math.atan2
+import android.graphics.PorterDuff
+import androidx.core.content.ContextCompat
+import android.util.TypedValue
 
 
 class PhoneNumberFragment : Fragment() {
     private lateinit var knob : ImageView
     private lateinit var phonenumberEditText: TextInputEditText
-    private lateinit var button: ImageButton
+    private lateinit var button: MaterialButton
     private lateinit var  textview1 : TextView
     private lateinit var  textview2 : TextView
     private lateinit var  textview3 : TextView
@@ -40,11 +43,13 @@ class PhoneNumberFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initViews()
         addCountryCodes()
         addTextViewIds()
         setCountryNamesCodesToViews()
         setKnobTouchListener()
+        setKnobColor()
 
         button.setOnClickListener {
             closeKeyboard()
@@ -70,6 +75,16 @@ class PhoneNumberFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_phone_number, container, false)
     }
 
+    private fun setKnobColor(){
+        val typedValue = TypedValue()
+        activity?.theme?.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        val mIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.knob2)
+        mIcon!!.setColorFilter(
+            ContextCompat.getColor(requireActivity(), typedValue.resourceId),
+            PorterDuff.Mode.MULTIPLY
+        )
+        knob.setImageDrawable(mIcon)
+    }
     @SuppressLint("ClickableViewAccessibility")
     private fun setKnobTouchListener() {
         knob.setOnTouchListener { v, event ->
@@ -133,7 +148,7 @@ class PhoneNumberFragment : Fragment() {
     private fun increaseTextSize(position : Int){
         for(i in textViewIds.indices){
             if(position == i){
-                textViewIds[i].textSize = 20.0F
+                textViewIds[i].textSize = 16.0F
                 textViewIds[i].typeface = Typeface.DEFAULT_BOLD
             }else{
                 textViewIds[i].textSize = 14.0F
@@ -158,7 +173,7 @@ class PhoneNumberFragment : Fragment() {
         phonenumberEditText = requireActivity().findViewById(R.id.phonenumberEditText)
         button = requireActivity().findViewById(R.id.myButton)
         textview1 =requireActivity().findViewById(R.id.textView1)
-        textview1.textSize = 20.0F
+        textview1.textSize = 16.0F
         textview1.typeface = Typeface.DEFAULT_BOLD
         textview2 =requireActivity().findViewById(R.id.textView2)
         textview3 =requireActivity().findViewById(R.id.textView3)

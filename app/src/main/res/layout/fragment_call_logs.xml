@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:text="Swipe down, click on 'Permissions', click on 'Call Logs' and then 'Allow'"
             android:gravity="center"
             android:layout_marginTop="70dp"
