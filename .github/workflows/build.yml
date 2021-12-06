@@ -50,5 +50,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: app-release-signed.apk
-          asset_name: WhySave-${{ github.ref }}.apk
+          asset_name: WhySave_${{ github.ref }}.apk
           asset_content_type: application/zip
