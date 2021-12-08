@@ -42,6 +42,10 @@ jobs:
           tag_name: ${{ github.ref }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          
+      - name: Get Tag
+        id: var
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - name: Upload APK
         uses: actions/upload-release-asset@v1
@@ -50,5 +54,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: app-release-signed.apk
-          asset_name: WhySave_${{ github.ref }}.apk
+          asset_name: WhySave-${{ steps.var.outputs.tag }}.apk
           asset_content_type: application/zip
