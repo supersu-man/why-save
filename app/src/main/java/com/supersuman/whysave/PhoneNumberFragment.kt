@@ -77,7 +77,7 @@ class PhoneNumberFragment : Fragment() {
 
     private fun setKnobColor(){
         val typedValue = TypedValue()
-        activity?.theme?.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        activity?.theme?.resolveAttribute(R.attr.colorSecondary, typedValue, true)
         val mIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.knob2)
         mIcon!!.setColorFilter(
             ContextCompat.getColor(requireActivity(), typedValue.resourceId),
