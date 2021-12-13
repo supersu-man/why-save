@@ -28,7 +28,7 @@ import java.util.*
 
 class CallLogsFragment : Fragment() {
 
-    private val callsLogsArray : MutableList<List<String>> = mutableListOf()
+    private val callsLogsArray : MutableList<CallData> = mutableListOf()
     private lateinit var recyclerView : RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var textView: TextView
@@ -169,7 +169,8 @@ class CallLogsFragment : Fragment() {
 
                     val callType = getcallCodes(type.toInt())
                     val duration = timeDuration(currentTime - time.toLong())
-                    callsLogsArray.add(listOf(number,callType,duration))
+                    val log = CallData(number, callType, duration)
+                    callsLogsArray.add(log)
                 }
             }
         }

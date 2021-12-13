@@ -15,7 +15,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputEditText
 
 class CallLogsRecyclerViewAdapter(
-    private val mutableList: MutableList<List<String>>,
+    private val mutableList: MutableList<CallData>,
     private val phonenumberEditText: TextInputEditText
 ) : RecyclerView.Adapter<CallLogsRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
@@ -31,16 +31,17 @@ class CallLogsRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.number.text = mutableList[position][0]
-        holder.type.text = mutableList[position][1]
-        holder.time.text = mutableList[position][2]
+        holder.number.text = mutableList[position].number
+        holder.type.text = mutableList[position].type
+        holder.time.text = mutableList[position].duration
         holder.materialCardView.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send/?phone=%2B${mutableList[position][0].replace("+","")}&text&app_absent=0"))
+            val browserIntent = Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://api.whatsapp.com/send/?phone=%2B${mutableList[position].number}&text&app_absent=0"))
             holder.context.startActivity(browserIntent)
         }
         holder.materialCardView.setOnLongClickListener {
-            copyToClipboard(holder.context, mutableList[position][0].replace("+",""))
-            phonenumberEditText.setText(mutableList[position][0])
+            copyToClipboard(holder.context, mutableList[position].number)
+            phonenumberEditText.setText(mutableList[position].number)
             return@setOnLongClickListener true
         }
     }
