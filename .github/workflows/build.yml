@@ -1,4 +1,4 @@
-name: Build
+name: Release Build
 on:
   push:
     tags:
@@ -10,11 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Get Tag
+        id: var
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
       - name: Build APK
+        id: build
         run: bash ./gradlew assembleRelease
 
       - name: Sign APK
-        id: sign_app
+        id: sign_apk
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/apk/release
@@ -23,29 +28,34 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
 
-      - name: Rename APK
-        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} app-release-signed.apk
+      - name: Build AAB
+        run: bash ./gradlew bundleRelease
 
-      - name: Make artifact
-        uses: actions/upload-artifact@v2
+      - name: Sign AAB
+        id: sign_aab
+        uses: r0adkll/sign-android-release@v1
         with:
-          name: app-release-signed
-          path: app-release-signed.apk
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
+          keyPassword: ${{ secrets.KEYPASSWORD }}
 
-      - name: Create release
-        uses: actions/create-release@v1
+      - name: Build Changelog
+        id: changelog
+        uses: ardalanamini/auto-changelog@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
         id: create_release
+        uses: actions/create-release@v1
         with:
-          draft: false
-          prerelease: false
-          release_name: Release ${{ github.ref }}
           tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }} &#x20;
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          
-      - name: Get Tag
-        id: var
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
 
       - name: Upload APK
         uses: actions/upload-release-asset@v1
@@ -53,6 +63,16 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app-release-signed.apk
-          asset_name: WhySave-${{ steps.var.outputs.tag }}.apk
+          asset_path: ${{steps.sign_apk.outputs.signedReleaseFile}}
+          asset_name: app-release-signed-${{ steps.var.outputs.tag }}.apk
+          asset_content_type: application/zip
+
+      - name: Upload AAB
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{steps.sign_aab.outputs.signedReleaseFile}}
+          asset_name: app-release-signed-${{ steps.var.outputs.tag }}.aab
           asset_content_type: application/zip
