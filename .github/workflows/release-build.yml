@@ -28,6 +28,12 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
 
+      - name: Make artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release-signed
+          path: ${{steps.sign_apk.outputs.signedReleaseFile}}
+
       - name: Build AAB
         run: bash ./gradlew bundleRelease
 
@@ -41,11 +47,17 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTOREPASSWORD }}
           keyPassword: ${{ secrets.KEYPASSWORD }}
 
+      - name: Make artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release-signed
+          path: ${{steps.sign_aab.outputs.signedReleaseFile}}
+
       - name: Build Changelog
         id: changelog
         uses: ardalanamini/auto-changelog@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
