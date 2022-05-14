@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">WhySave</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="long_text">PlayStore does not allow this feature on this App. You can use this feature by installing the APK. Do remove the PlayStore version of this App before installing the APK.</string>
 </resources>

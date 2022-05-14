@@ -16,7 +16,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="According to Google Play rules the call logs feature is not available on PlayStore version of this App. You can use the github version to access this amazing feature."
+        android:text="@string/long_text"
         android:textSize="16sp" />
 
     <com.google.android.material.button.MaterialButton
