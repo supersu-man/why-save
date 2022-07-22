@@ -1,5 +1,0 @@
-<resources>
-    <style name="Theme.WhySave" parent="Theme.Material3.DynamicColors.DayNight">
-        <item name="android:statusBarColor">?attr/colorSurface</item>
-    </style>
-</resources>
