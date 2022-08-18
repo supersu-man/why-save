@@ -36,11 +36,11 @@ chatButton.addEventListener('click', () => {
 })
 
 downloadButton1.addEventListener('click', () => {
-    window.open('https://play.google.com/store/apps/details?id=com.supersuman.whysave', '_self')
+    window.open('https://github.com/supersu-man/why-save/releases', '_self')
 })
 
 downloadButton2.addEventListener('click', () => {
-    window.open('https://github.com/supersu-man/why-save/releases', '_self')
+    window.open('https://play.google.com/store/apps/details?id=com.supersuman.whysave', '_self')
 })
 
 function getRndInteger(min, max) {

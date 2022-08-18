@@ -1,4 +1,55 @@
-@import url(./colors.css);
+* {
+	--md-sys-color-primary-light: #256c28;
+	--md-sys-color-on-primary-light: #ffffff;
+	--md-sys-color-primary-container-light: #a9f5a1;
+	--md-sys-color-on-primary-container-light: #002203;
+	--md-sys-color-secondary-light: #53634f;
+	--md-sys-color-on-secondary-light: #ffffff;
+	--md-sys-color-secondary-container-light: #d6e8ce;
+	--md-sys-color-on-secondary-container-light: #111f0f;
+	--md-sys-color-tertiary-light: #38656a;
+	--md-sys-color-on-tertiary-light: #ffffff;
+	--md-sys-color-tertiary-container-light: #bcebf0;
+	--md-sys-color-on-tertiary-container-light: #002022;
+	--md-sys-color-error-light: #ba1a1a;
+	--md-sys-color-on-error-light: #ffffff;
+	--md-sys-color-error-container-light: #ffdad6;
+	--md-sys-color-on-error-container-light: #410002;
+	--md-sys-color-outline-light: #72796f;
+	--md-sys-color-background-light: #fcfdf6;
+	--md-sys-color-on-background-light: #1a1c19;
+	--md-sys-color-surface-light: #fcfdf6;
+	--md-sys-color-on-surface-light: #1a1c19;
+	--md-sys-color-surface-variant-light: #dee5d8;
+	--md-sys-color-on-surface-variant-light: #424940;
+	--md-sys-color-inverse-surface-light: #2f312d;
+	--md-sys-color-inverse-on-surface-light: #f1f1eb;
+	--md-sys-color-primary-dark: #8ed887;
+	--md-sys-color-on-primary-dark: #003909;
+	--md-sys-color-primary-container-dark: #035312;
+	--md-sys-color-on-primary-container-dark: #a9f5a1;
+	--md-sys-color-secondary-dark: #baccb3;
+	--md-sys-color-on-secondary-dark: #253423;
+	--md-sys-color-secondary-container-dark: #3b4b38;
+	--md-sys-color-on-secondary-container-dark: #d6e8ce;
+	--md-sys-color-tertiary-dark: #a0cfd4;
+	--md-sys-color-on-tertiary-dark: #00363b;
+	--md-sys-color-tertiary-container-dark: #1e4d52;
+	--md-sys-color-on-tertiary-container-dark: #bcebf0;
+	--md-sys-color-error-dark: #ffb4ab;
+	--md-sys-color-on-error-dark: #690005;
+	--md-sys-color-error-container-dark: #93000a;
+	--md-sys-color-on-error-container-dark: #ffdad6;
+	--md-sys-color-outline-dark: #8c9388;
+	--md-sys-color-background-dark: #1a1c19;
+	--md-sys-color-on-background-dark: #e2e3dd;
+	--md-sys-color-surface-dark: #1a1c19;
+	--md-sys-color-on-surface-dark: #e2e3dd;
+	--md-sys-color-surface-variant-dark: #424940;
+	--md-sys-color-on-surface-variant-dark: #c2c8bd;
+	--md-sys-color-inverse-surface-dark: #e2e3dd;
+	--md-sys-color-inverse-on-surface-dark: #1a1c19;
+}
 
 .dark-theme {
 	--md-sys-color-primary: var(--md-sys-color-primary-dark);
@@ -54,58 +105,4 @@
 	--md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
 	--md-sys-color-inverse-surface: var(--md-sys-color-inverse-surface-light);
 	--md-sys-color-inverse-on-surface: var(--md-sys-color-inverse-on-surface-light);
-}
-
-html,
-body {
-	height: 100vh;
-	padding: 0px;
-	margin: 0px;
-	background-color: var(--md-sys-color-surface);
-	color: var(--md-sys-color-on-surface);
-}
-
-.form-control {
-	background-color: var(--md-sys-color-surface) !important;
-	border-color: var(--md-sys-color-outline);
-	transition: 200ms;
-	border-width: 2px;
-	color: var(--md-sys-color-on-surface) !important;
-}
-
-.form-control:focus {
-	border-color: var(--md-sys-color-primary);
-}
-
-.btn {
-	width: fit-content;
-	background-color: var(--md-sys-color-primary) !important;
-	color: var(--md-sys-color-on-primary) !important;
-	border-radius: 100px;
-	border-width: 0px;
-	padding: 8px 24px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.btn:hover {
-	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-}
-
-.form-switch .form-check-input,
-.form-switch .form-check-input:focus,
-.form-switch .form-check-input:checked {
-	outline: 0;
-	box-shadow: none;
-	height: 24px;
-	width: 48px;
-	border: 4px solid var(--md-sys-color-primary);
-	background-color: var(--md-sys-color-primary);
-	background-image: url(./assets/circle.svg);
-}
-
-.container,
-.d-flex {
-	height: 100vh;
 }
