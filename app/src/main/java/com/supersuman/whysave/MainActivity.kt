@@ -7,36 +7,34 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.supersuman.githubapkupdater.Updater
+import com.supersuman.whysave.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
     private lateinit var rootLayout: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.hide()
-        initViews()
+
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager.adapter = PagerAdapter(supportFragmentManager)
 
         thread {
-            val updater = Updater(this, "https://github.com/supersu-man/WhySave/releases/latest")
+            val updater = Updater(this, "https://github.com/supersu-man/why-save/releases/latest")
             checkForUpdates(updater)
         }
     }
 
 
 
-    private fun initViews() {
-        rootLayout = findViewById(R.id.rootLayout)
-        viewPager = findViewById(R.id.viewPager)
-        tabLayout = findViewById(R.id.tabLayout)
-        tabLayout.setupWithViewPager(viewPager)
-        viewPager.adapter = PagerAdapter(supportFragmentManager)
-    }
 
     private fun checkForUpdates(updater: Updater){
         if (updater.isInternetConnection()){
