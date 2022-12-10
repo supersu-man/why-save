@@ -15,8 +15,8 @@ android {
         applicationId "com.supersuman.whysave"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 10
-        versionName "1.6.0"
+        versionCode 11
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
