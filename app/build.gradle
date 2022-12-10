@@ -7,6 +7,10 @@ android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.supersuman.whysave"
         minSdkVersion 21
@@ -29,11 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.supersuman.whysave'
 }
 
 dependencies {
     implementation 'com.github.supersu-man:GitHubAPKUpdater-Library:v1.5'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'com.github.wickerlabs:CallLogs:1.09'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.7.0-alpha03'
