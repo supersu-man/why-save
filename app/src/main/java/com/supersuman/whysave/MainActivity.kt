@@ -3,6 +3,7 @@ package com.supersuman.whysave
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import com.supersuman.apkupdater.ApkUpdater
 import com.supersuman.whysave.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
@@ -16,11 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
 
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
-        binding.viewPager.adapter = PagerAdapter(supportFragmentManager)
-
+        binding.viewPager.adapter = PagerAdapter(this)
+        binding.viewPager.offscreenPageLimit = 2
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when(position) {
+                0 -> tab.text = "Phone"
+                else -> tab.text = "Calls log"
+            }
+        }.attach()
         thread {
             val url = "https://github.com/supersu-man/why-save/releases/latest"
             val updater = ApkUpdater(this@MainActivity, url)

@@ -15,7 +15,12 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.supersuman.whysave.databinding.FragmentCallLogsBinding
+import com.wickerlabs.logmanager.LogObject
 import com.wickerlabs.logmanager.LogsManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.concurrent.thread
 
 
@@ -48,7 +53,7 @@ class CallLogsFragment : Fragment() {
         }
     }
 
-    private fun getSetCallLogs() = thread {
+    private fun getSetCallLogs() = CoroutineScope(Dispatchers.IO).launch {
         val logsManager = LogsManager(context)
         val callLogs = logsManager.getLogs(LogsManager.ALL_CALLS)
         activity?.runOnUiThread {
